@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 36 33% 97%;          /* #F8F5F0 - Warm Ivory/Cream background */
+    --foreground: 20 15% 15%;          /* #292524 - Deep Slate Stone */
+    
+    --card: 36 33% 99%;                /* #FCFAF7 - Softest White Cream */
+    --card-foreground: 20 15% 15%;
+    
+    --popover: 36 33% 99%;
+    --popover-foreground: 20 15% 15%;
+    
+    --primary: 89 17% 24%;             /* Olive Green #3D4732 */
+    --primary-foreground: 36 40% 98%;   /* Soft Warm White */
+    
+    --secondary: 36 20% 93%;           /* #EDEAE3 - Muted Cream */
+    --secondary-foreground: 20 15% 15%;
+    
+    --muted: 36 20% 93%;
+    --muted-foreground: 20 10% 45%;    /* Warm Stone Gray */
+    
+    --accent: 36 20% 93%;
+    --accent-foreground: 20 15% 15%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 30 10% 90%;              /* #EAE6DF - Light Warm Taupe */
+    --input: 30 10% 90%;
+    --ring: 89 17% 24%;
+    
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 20 15% 10%;          /* Deep Charcoal Warm background */
+    --foreground: 36 33% 95%;          /* Soft Warm White */
+    
+    --card: 20 15% 12%;
+    --card-foreground: 36 33% 95%;
+    
+    --popover: 20 15% 12%;
+    --popover-foreground: 36 33% 95%;
+    
+    --primary: 89 20% 45%;             /* Lighter Olive Green for dark mode contrast */
+    --primary-foreground: 20 15% 10%;
+    
+    --secondary: 20 10% 16%;
+    --secondary-foreground: 36 33% 95%;
+    
+    --muted: 20 10% 16%;
+    --muted-foreground: 20 5% 65%;
+    
+    --accent: 20 10% 16%;
+    --accent-foreground: 36 33% 95%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 36 33% 95%;
+    
+    --border: 20 10% 20%;
+    --input: 20 10% 20%;
+    --ring: 89 20% 45%;
+  }
+}
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  margin: 0;
+}
