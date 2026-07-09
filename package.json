@@ -13,11 +13,6 @@
     "build:all": "pnpm --filter \"./apps/*\" build",
     "infra:up": "docker compose up -d",
     "infra:down": "docker compose down",
-    "infra:localstack:up": "docker compose --profile infra up -d localstack",
-    "infra:tf:init": "docker compose --profile infra run --rm terraform init",
-    "infra:tf:plan": "docker compose --profile infra run --rm terraform plan",
-    "infra:tf:apply": "docker compose --profile infra run --rm terraform apply",
-    "infra:tf:destroy": "docker compose --profile infra run --rm terraform destroy",
     "db:migrate:run:docker": "docker compose run --rm migrate",
     "db:migrate:revert:docker": "docker compose run --rm migrate-revert",
     "db:migrate:generate": "pnpm --filter backend migration:generate",
@@ -31,7 +26,7 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "11.6.0",
+      "version": "11.8.0",
       "onFail": "download"
     }
   }

@@ -5,3 +5,6 @@ packages:
 allowBuilds:
   msgpackr-extract: true
   unrs-resolver: true
+
+overrides:
+  multer: '>=2.2.0'
