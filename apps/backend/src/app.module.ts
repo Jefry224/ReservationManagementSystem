@@ -21,6 +21,8 @@ import { HealthController } from './health.controller';
         connection: {
           host: configService.get<string>('redis.host'),
           port: configService.get<number>('redis.port'),
+          password: configService.get<string>('redis.password'),
+          tls: configService.get('redis.tls'),
         },
       }),
     }),
@@ -30,4 +32,4 @@ import { HealthController } from './health.controller';
     EmailQueueModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

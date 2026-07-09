@@ -13,7 +13,9 @@ export class EmailService {
   ) {}
 
   async queueConfirmation(reservation: Reservation, providerName: string) {
-    this.logger.log(`Queueing confirmation email for: ${reservation.patientEmail}`);
+    this.logger.log(
+      `Queueing confirmation email for: ${reservation.patientEmail}`,
+    );
 
     // Add the job to the BullMQ queue in Redis
     await this.emailQueue.add(

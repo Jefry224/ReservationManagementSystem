@@ -13,7 +13,6 @@ import { SlotAlreadyBookedException } from '../common/exceptions/slot-already-bo
 
 @Injectable()
 export class ReservationsService {
-
   constructor(
     @InjectRepository(Reservation)
     private readonly reservationRepository: Repository<Reservation>,
@@ -21,7 +20,7 @@ export class ReservationsService {
     private readonly emailService: EmailService,
     // Used for manual transactions and pessimistic locking
     private readonly dataSource: DataSource,
-  ) { }
+  ) {}
 
   async bookSlot(dto: CreateReservationDto): Promise<Reservation> {
     const { providerId, patientEmail, startTime, endTime } = dto;
@@ -39,38 +38,44 @@ export class ReservationsService {
     }
 
     // 1. Run the full database workflow inside a transaction
-    const savedReservation = await this.dataSource.transaction(async (entityManager) => {
-      // Apply a pessimistic write lock on the provider
-      const provider = await entityManager.getRepository(Provider).findOne({
-        where: { id: providerId },
-        lock: { mode: 'pessimistic_write' },
-      });
+    const savedReservation = await this.dataSource.transaction(
+      async (entityManager) => {
+        // Apply a pessimistic write lock on the provider
+        const provider = await entityManager.getRepository(Provider).findOne({
+          where: { id: providerId },
+          lock: { mode: 'pessimistic_write' },
+        });
 
-      if (!provider) {
-        throw new ProviderNotFoundException(providerId);
-      }
+        if (!provider) {
+          throw new ProviderNotFoundException(providerId);
+        }
 
-      // Check for overlap inside the same transaction
-      const overlapping = await entityManager.getRepository(Reservation)
-        .createQueryBuilder('reservation')
-        .where('reservation.providerId = :providerId', { providerId })
-        .andWhere('(reservation.startTime < :end AND reservation.endTime > :start)', { start, end })
-        .getOne();
+        // Check for overlap inside the same transaction
+        const overlapping = await entityManager
+          .getRepository(Reservation)
+          .createQueryBuilder('reservation')
+          .where('reservation.providerId = :providerId', { providerId })
+          .andWhere(
+            '(reservation.startTime < :end AND reservation.endTime > :start)',
+            { start, end },
+          )
+          .getOne();
 
-      if (overlapping) {
-        throw new SlotAlreadyBookedException();
-      }
+        if (overlapping) {
+          throw new SlotAlreadyBookedException();
+        }
 
-      // Create and save the reservation
-      const newReservation = entityManager.getRepository(Reservation).create({
-        providerId,
-        patientEmail,
-        startTime: start,
-        endTime: end,
-      });
+        // Create and save the reservation
+        const newReservation = entityManager.getRepository(Reservation).create({
+          providerId,
+          patientEmail,
+          startTime: start,
+          endTime: end,
+        });
 
-      return await entityManager.save(newReservation);
-    });
+        return await entityManager.save(newReservation);
+      },
+    );
 
     // 2. Outside the DB transaction, enqueue the job only after the booking is confirmed
     const provider = await this.providersService.findById(providerId);
@@ -106,8 +111,10 @@ export class ReservationsService {
     const endHour = 17;
 
     for (let hour = startHour; hour < endHour; hour++) {
-      for (let min of [0, 30]) {
-        const slotStart = new Date(Date.UTC(year, month - 1, day, hour, min, 0, 0));
+      for (const min of [0, 30]) {
+        const slotStart = new Date(
+          Date.UTC(year, month - 1, day, hour, min, 0, 0),
+        );
         const slotEnd = new Date(slotStart.getTime() + 30 * 60 * 1000);
         slots.push({
           startTime: slotStart.toISOString(),
@@ -124,9 +131,12 @@ export class ReservationsService {
       },
     });
 
-    return slots.map(slot => {
-      const isBooked = reservations.some(res => {
-        return new Date(res.startTime).getTime() === new Date(slot.startTime).getTime();
+    return slots.map((slot) => {
+      const isBooked = reservations.some((res) => {
+        return (
+          new Date(res.startTime).getTime() ===
+          new Date(slot.startTime).getTime()
+        );
       });
 
       const isPast = new Date(slot.startTime).getTime() < Date.now();

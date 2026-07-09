@@ -6,11 +6,10 @@ import { ProviderNotFoundException } from '../common/exceptions/provider-not-fou
 
 @Injectable()
 export class ProvidersService implements OnModuleInit {
-
   constructor(
     @InjectRepository(Provider)
     private readonly providerRepository: Repository<Provider>,
-  ) { }
+  ) {}
 
   async onModuleInit() {
     await this.seedProviders();
@@ -28,11 +27,11 @@ export class ProvidersService implements OnModuleInit {
       const saved = await this.providerRepository.save(entities);
 
       console.log('🌱 Database seeded. Available Providers:');
-      saved.forEach(p => console.log(`- ${p.name}: ID [ ${p.id} ]`));
+      saved.forEach((p) => console.log(`- ${p.name}: ID [ ${p.id} ]`));
     } else {
       const providers = await this.providerRepository.find();
       console.log('👥 Available Providers in DB:');
-      providers.forEach(p => console.log(`- ${p.name}: ID [ ${p.id} ]`));
+      providers.forEach((p) => console.log(`- ${p.name}: ID [ ${p.id} ]`));
     }
   }
 
