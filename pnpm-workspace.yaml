@@ -1,0 +1,7 @@
+packages:
+  - 'apps/*'
+  - 'shared/*'
+
+allowBuilds:
+  msgpackr-extract: true
+  unrs-resolver: true
