@@ -8,17 +8,19 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 3000
       - key: DB_HOST
         sync: false
       - key: DB_PORT
-        sync: false
+        value: 5432
       - key: DB_NAME
         sync: false
       - key: DB_USERNAME
         sync: false
       - key: DB_PASSWORD
         sync: false
-      - key: REDIS_HOST
-        sync: false
-      - key: REDIS_PORT
+      - key: DB_SSL
+        value: true
+      - key: REDIS_URL
         sync: false

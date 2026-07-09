@@ -4,6 +4,7 @@
   "description": "Reservation Management System - Thrivelab Technical Challenge",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@8.15.6",
   "scripts": {
     "dev": "pnpm infra:up && pnpm -r --parallel dev",
     "dev:backend": "pnpm --filter backend start:dev",
@@ -26,7 +27,7 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "11.8.0",
+      "version": "8.15.6",
       "onFail": "download"
     }
   }

@@ -17,14 +17,21 @@ import { HealthController } from './health.controller';
     }),
     BullModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        connection: {
-          host: configService.get<string>('redis.host'),
-          port: configService.get<number>('redis.port'),
-          password: configService.get<string>('redis.password'),
-          tls: configService.get('redis.tls'),
-        },
-      }),
+      useFactory: (configService: ConfigService) => {
+        const urlStr =
+          configService.get<string>('redis.url') || 'redis://localhost:6379';
+        const parsed = new URL(urlStr);
+
+        return {
+          connection: {
+            host: parsed.hostname,
+            port: parseInt(parsed.port || '6379', 10),
+            username: parsed.username || undefined,
+            password: parsed.password || undefined,
+            tls: parsed.protocol === 'rediss:' ? {} : undefined,
+          },
+        };
+      },
     }),
     DatabaseModule,
     ReservationsModule,

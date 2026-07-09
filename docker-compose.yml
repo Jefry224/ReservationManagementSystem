@@ -47,8 +47,7 @@ services:
       DB_NAME: thrivelab_db
       DB_USERNAME: postgres
       DB_PASSWORD: password
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+      REDIS_URL: redis://redis:6379
     depends_on:
       postgres:
         condition: service_healthy

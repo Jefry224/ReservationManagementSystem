@@ -2,7 +2,7 @@ FROM node:24-alpine AS build
 
 WORKDIR /app
 
-RUN corepack enable && corepack prepare pnpm@11.6.0 --activate
+RUN corepack enable && corepack prepare pnpm@8.15.6 --activate
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/backend/package.json apps/backend/package.json
@@ -13,7 +13,7 @@ RUN pnpm install --frozen-lockfile
 COPY apps/backend apps/backend
 
 RUN pnpm --filter backend build
-RUN pnpm --filter backend deploy --legacy --prod /tmp/backend-deploy
+RUN pnpm --filter backend deploy --prod /tmp/backend-deploy
 
 FROM build AS migration
 
