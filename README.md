@@ -13,6 +13,11 @@ The application is currently deployed with a split managed stack:
 
 Locally, the full stack runs with Docker Compose.
 
+The repository also includes deployment helpers:
+
+- `render.yaml` for the backend service
+- `vercel.json` for the frontend static build
+
 ## Tech choices
 
 ### Backend: NestJS
@@ -178,6 +183,8 @@ For the public surface:
 
 If the backend needs to call external email or SMS providers, I would allow outbound traffic through a NAT gateway and keep the database and cache unreachable from the internet.
 
+The backend exposes `GET /health` so container platforms such as Render can probe the service without relying on a business endpoint.
+
 ### Custom domain
 
 A custom domain can be added from AWS using Route 53 and ACM. That gives DNS management, certificate issuance, and clean HTTPS configuration in the same platform.
@@ -198,16 +205,9 @@ A custom domain can be added from AWS using Route 53 and ACM. That gives DNS man
 - Expand automated tests, especially booking concurrency, API coverage, and UI flows.
 - Replace the mocked email worker with a real outbound mail provider.
 - Add SMS notifications for reservation confirmation.
-- Rework the calendar UX and visual design.
+- Cancellation, rescheduling for the reservations from providers and patients.
 - Finish the AWS migration end to end.
 
-## Questions worth asking before production
-
-- What is the required authentication model for patients and providers?
-- Which notification channels are mandatory: email only, SMS only, or both?
-- Do reservations need cancellation, rescheduling, or provider-managed overrides?
-- Should the system enforce availability at the database level in addition to application-level locking?
-- What observability is required: logs only, or metrics and tracing as well?
 
 ## Repository structure
 

@@ -6,8 +6,10 @@ import { ProvidersModule } from './providers/providers.module';
 import { BullModule } from '@nestjs/bullmq';
 import { EmailQueueModule } from './email-queue/email-queue.module';
 import configuration from './config/configuration';
+import { HealthController } from './health.controller';
 
 @Module({
+  controllers: [HealthController],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,

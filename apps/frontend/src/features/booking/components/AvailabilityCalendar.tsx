@@ -1,4 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { DatePicker } from "@/shared/components/ui/date-picker";
 import { Calendar, Clock } from "lucide-react";
 
 interface Provider {
@@ -48,11 +49,9 @@ export function AvailabilityCalendar({
         {selectedProvider && (
           <div className="flex items-center gap-2 shrink-0">
             <span className="text-xs text-muted-foreground font-medium">Select Date:</span>
-            <input
-              type="date"
+            <DatePicker
               value={selectedDate}
-              onChange={(e) => onSelectDate(e.target.value)}
-              className="border border-input rounded-md px-3 py-1.5 text-sm bg-background text-foreground shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+              onChange={onSelectDate}
             />
           </div>
         )}

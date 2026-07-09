@@ -24,7 +24,7 @@ CMD ["pnpm", "--filter", "backend", "migration:run"]
 FROM node:24-alpine AS runtime
 
 WORKDIR /app
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 
 COPY --from=build /tmp/backend-deploy ./
 
